@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:mob3_uas_klp_05/ui/admin/aktivitas/aktivitas.dart';
 import 'package:mob3_uas_klp_05/ui/admin/dashboard/dashboard.dart';
+import 'package:mob3_uas_klp_05/ui/admin/report/report.dart';
+import 'package:mob3_uas_klp_05/ui/admin/settings/settings.dart';
 
 class MainPageAdmin extends StatefulWidget {
   const MainPageAdmin({super.key});
@@ -12,8 +15,9 @@ class _MainPageAdminState extends State<MainPageAdmin> {
   int _currentIndex = 0; // Index yang aktif pada BottomNavigationBar
   final List<Widget> _pages = const [
     DashboardAdmin(),
-    // TransaksiPage(),
-    // AccountPage(),
+    AktivitasPage(),
+    ReportPage(),
+    SettingsPage()
   ];
 
   // Fungsi untuk mengganti halaman berdasarkan index
@@ -35,16 +39,16 @@ class _MainPageAdminState extends State<MainPageAdmin> {
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.dashboard),
             label: "Beranda",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_outlined),
+            icon: Icon(Icons.list),
             label: "Aktivitas",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_long_outlined),
-            label: "Transaksi",
+            icon: Icon(Icons.bar_chart),
+            label: "Report",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -52,13 +56,6 @@ class _MainPageAdminState extends State<MainPageAdmin> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your action for the centered button
-        },
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }

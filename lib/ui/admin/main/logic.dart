@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
+import 'package:mob3_uas_klp_05/ui/admin/aktivitas/aktivitas.dart';
 import 'package:mob3_uas_klp_05/ui/admin/dashboard/dashboard.dart';
+import 'package:mob3_uas_klp_05/ui/admin/report/report.dart';
+import 'package:mob3_uas_klp_05/ui/admin/settings/settings.dart';
 
 class PageLogic with ChangeNotifier {
   int _currentIndex = 0;
@@ -7,8 +10,9 @@ class PageLogic with ChangeNotifier {
   // List halaman untuk BottomNavigationBar
   List<Widget> page = [
     const DashboardAdmin(),
-    // const TransaksiPage(),
-    // const AccountPage(),
+    const AktivitasPage(),
+    const ReportPage(),
+    const SettingsPage(),
   ];
 
   // Getter untuk currentIndex
@@ -17,6 +21,6 @@ class PageLogic with ChangeNotifier {
   // Fungsi untuk mengubah index
   void changeIndex(int index) {
     _currentIndex = index;
-    notifyListeners(); // Untuk memberi tahu perubahan
+    notifyListeners();
   }
 }

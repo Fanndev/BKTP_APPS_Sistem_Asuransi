@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:mob3_uas_klp_05/config/user_config.dart';
+// import 'package:mob3_uas_klp_05/config/user_config.dart';
 import 'package:mob3_uas_klp_05/ui/splash.dart';
 
 void main() async {

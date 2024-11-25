@@ -45,16 +45,6 @@ class _IntroPageState extends State<IntroPage> {
       backgroundColor: Colors.white,
       body: Column(
         children: [
-          Container(
-            height: height * 0.1,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(100),
-                bottomRight: Radius.circular(100),
-              ),
-            ),
-          ),
           Expanded(
             child: Stack(
               alignment: Alignment.bottomCenter,

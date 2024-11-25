@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mob3_uas_klp_05/ui/admin/dashboard/dashboard.dart';
+import 'package:mob3_uas_klp_05/ui/petugas/aktivitas/aktivitas.dart';
+import 'package:mob3_uas_klp_05/ui/petugas/report/report.dart';
+import 'package:mob3_uas_klp_05/ui/petugas/settings/settings.dart';
+import 'package:mob3_uas_klp_05/ui/petugas/dashboard/dashboard.dart';
 
 class MainPagePetugas extends StatefulWidget {
   const MainPagePetugas({super.key});
@@ -11,9 +14,10 @@ class MainPagePetugas extends StatefulWidget {
 class _MainPagePetugasState extends State<MainPagePetugas> {
   int _currentIndex = 0; // Index yang aktif pada BottomNavigationBar
   final List<Widget> _pages = const [
-    DashboardAdmin(),
-    // TransaksiPage(),
-    // AccountPage(),
+    DashboardPetugas(),
+    AktivitasPage(),
+    ReportPage(),
+    SettingsPage()
   ];
 
   // Fungsi untuk mengganti halaman berdasarkan index
@@ -29,21 +33,26 @@ class _MainPagePetugasState extends State<MainPagePetugas> {
       body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 4,
-        selectedItemColor: Colors.blue,
+        selectedItemColor: Colors.green,
+        unselectedItemColor: Colors.grey,
         currentIndex: _currentIndex,
         onTap: _onItemTapped,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
+            icon: Icon(Icons.dashboard),
+            label: "Beranda",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.receipt_outlined),
-            label: "Transaksi",
+            icon: Icon(Icons.list),
+            label: "Aktivitas",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.bar_chart),
+            label: "Report",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
-            label: "Akun",
+            label: "Saya",
           ),
         ],
       ),

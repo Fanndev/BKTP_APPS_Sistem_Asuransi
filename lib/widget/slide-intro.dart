@@ -52,25 +52,28 @@ class IntroSlide extends StatelessWidget {
           ),
           const SizedBox(height: 40),
           if (isLastSlide)
-            ElevatedButton(
-              onPressed: () {
-                // Navigasi ke halaman login
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  // Navigasi ke halaman login
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
                 ),
+                child: const Text('Next',
+                    style: TextStyle(fontSize: 18, color: Colors.white)),
               ),
-              child: const Text('Next',
-                  style: TextStyle(fontSize: 18, color: Colors.white)),
             ),
         ],
       ),
