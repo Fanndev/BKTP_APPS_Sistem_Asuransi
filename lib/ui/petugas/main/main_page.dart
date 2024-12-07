@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/aktivitas/aktivitas.dart';
-import 'package:mob3_uas_klp_05/ui/petugas/report/report.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/settings/settings.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/dashboard/dashboard.dart';
 
@@ -16,7 +15,6 @@ class _MainPagePetugasState extends State<MainPagePetugas> {
   final List<Widget> _pages = const [
     DashboardPetugas(),
     AktivitasPage(),
-    ReportPage(),
     SettingsPage()
   ];
 
@@ -45,10 +43,6 @@ class _MainPagePetugasState extends State<MainPagePetugas> {
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
             label: "Aktivitas",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.bar_chart),
-            label: "Report",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),

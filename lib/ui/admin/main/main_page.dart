@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:mob3_uas_klp_05/ui/admin/aktivitas/aktivitas.dart';
+import 'package:mob3_uas_klp_05/ui/admin/product/product.dart';
 import 'package:mob3_uas_klp_05/ui/admin/dashboard/dashboard.dart';
 import 'package:mob3_uas_klp_05/ui/admin/report/report.dart';
 import 'package:mob3_uas_klp_05/ui/admin/settings/settings.dart';
@@ -13,11 +13,11 @@ class MainPageAdmin extends StatefulWidget {
 
 class _MainPageAdminState extends State<MainPageAdmin> {
   int _currentIndex = 0; // Index yang aktif pada BottomNavigationBar
-  final List<Widget> _pages = const [
-    DashboardAdmin(),
-    AktivitasPage(),
-    ReportPage(),
-    SettingsPage()
+  final List<Widget> _pages = [
+     DashboardAdmin(),
+     ProductPage(),
+     ReportPage(),
+     SettingsPage()
   ];
 
   // Fungsi untuk mengganti halaman berdasarkan index
@@ -43,8 +43,8 @@ class _MainPageAdminState extends State<MainPageAdmin> {
             label: "Beranda",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: "Aktivitas",
+            icon: Icon(Icons.insert_chart_outlined),
+            label: "Product",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bar_chart),

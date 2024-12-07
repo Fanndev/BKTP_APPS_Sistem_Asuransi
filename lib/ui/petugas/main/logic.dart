@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/aktivitas/aktivitas.dart';
-import 'package:mob3_uas_klp_05/ui/petugas/report/report.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/settings/settings.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/dashboard/dashboard.dart';
 
@@ -11,7 +10,6 @@ class PageLogic with ChangeNotifier {
   List<Widget> page = [
     const DashboardPetugas(),
     const AktivitasPage(),
-    const ReportPage(),
     const SettingsPage(),
   ];
 

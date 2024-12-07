@@ -52,7 +52,7 @@ class _SplashPageState extends State<SplashPage>
             const SizedBox(height: 20),
             // Teks utama
             const Text(
-              'Aplikasi BKTP\nKoperasi Peminjaman Angsuran',
+              'Aplikasi BKTP\nKoperasi Peminjaman Asuransi',
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 22,

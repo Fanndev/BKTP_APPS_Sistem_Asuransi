@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:mob3_uas_klp_05/firebase_options.dart';
 // import 'package:mob3_uas_klp_05/config/user_config.dart';
 import 'package:mob3_uas_klp_05/ui/splash.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   // Fungsi Config User
   // migrateExistingUsers();
@@ -17,6 +20,7 @@ class BktpSistemApps extends StatelessWidget {
   const BktpSistemApps({super.key});
 
   @override
+
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
