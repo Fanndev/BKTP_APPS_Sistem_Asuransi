@@ -1,8 +1,11 @@
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mob3_uas_klp_05/ui/anggota/settings/reset_password.dart';
+import 'package:mob3_uas_klp_05/ui/anggota/settings/tentang_kami.dart';
+import 'package:mob3_uas_klp_05/ui/anggota/settings/update_profile.dart';
 import 'package:mob3_uas_klp_05/widget/custom_list_tile.dart';
-import 'package:mob3_uas_klp_05/ui/anggota/home/home.dart';
 import 'package:mob3_uas_klp_05/ui/auth/login.dart';
 import 'package:mob3_uas_klp_05/utils/colors.dart';
 
@@ -17,9 +20,10 @@ class SettingsPage extends StatelessWidget {
         title: const Text("Logout Berhasil"),
         description: const Text("Anda telah berhasil logout."),
       ).show(context);
-      // Navigasi ke halaman login
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
     } catch (e) {
       ElegantNotification.error(
         title: const Text("Logout Gagal"),
@@ -30,62 +34,95 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: false,
-        title: const Text('Akun Saya',
-            style: TextStyle(
-                color: MainColors.white, fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Akun Saya',
+          style: TextStyle(
+            color: MainColors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: MainColors.primary,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(70.0),
           child: InkWell(
             onTap: () {
               Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const HomePageAnggota(),
-                  ));
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const UpdateProfilePage(),
+                ),
+              );
             },
             child: Container(
               padding: const EdgeInsets.all(16.0),
               color: MainColors.primary,
-              child: const Row(
-                children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.white,
-                    radius: 30.0,
-                    child: Icon(
-                      Icons.person,
-                      size: 30.0,
-                      color: MainColors.primary,
-                    ),
-                  ),
-                  SizedBox(width: 16.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              child: StreamBuilder<DocumentSnapshot>(
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(currentUser?.uid)
+                    .snapshots(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(color: Colors.white),
+                    );
+                  }
+
+                  if (snapshot.hasError ||
+                      !snapshot.hasData ||
+                      snapshot.data?.data() == null) {
+                    return const Text(
+                      'Gagal memuat data',
+                      style: TextStyle(color: Colors.white),
+                    );
+                  }
+
+                  final userData =
+                      snapshot.data?.data() as Map<String, dynamic>;
+
+                  return Row(
                     children: [
-                      Text(
-                        'Mohamad Irfan Fadhlurrahman',
-                        style: TextStyle(
-                          color: MainColors.white,
-                          fontWeight: FontWeight.bold,
+                      const CircleAvatar(
+                        backgroundColor: Colors.white,
+                        radius: 30.0,
+                        child: Icon(
+                          Icons.person,
+                          size: 30.0,
+                          color: MainColors.primary,
                         ),
                       ),
-                      Text(
-                        'fanndev@gmail.com',
-                        style: TextStyle(
-                          color: MainColors.white,
-                        ),
+                      const SizedBox(width: 16.0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            userData['username'] ?? 'Nama tidak tersedia',
+                            style: const TextStyle(
+                              color: MainColors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            userData['email'] ?? 'Email tidak tersedia',
+                            style: const TextStyle(
+                              color: MainColors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: Colors.white,
                       ),
                     ],
-                  ),
-                  Spacer(),
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                  ),
-                ],
+                  );
+                },
               ),
             ),
           ),
@@ -96,56 +133,69 @@ class SettingsPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Column(
             children: [
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     'Account',
                     style: TextStyle(
-                        color: MainColors.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                      color: MainColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 10),
               CustomListTile(
-                  icon: Icons.dashboard, title: 'Reset Password', onTap: () {}),
-              const SizedBox(
-                height: 10,
+                icon: Icons.dashboard,
+                title: 'Reset Password',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ResetPasswordPage(),
+                    ),
+                  );
+                },
               ),
+              const SizedBox(height: 10),
               const Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
                     'Bantuan',
                     style: TextStyle(
-                        color: MainColors.primary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20),
+                      color: MainColors.primary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
                   ),
                 ],
               ),
               CustomListTile(
-                  icon: Icons.group, title: 'Tentang Kami', onTap: () {}),
-              const SizedBox(
-                height: 10,
+                icon: Icons.group,
+                title: 'Tentang Kami',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const TentangKamiPage(),
+                    ),
+                  );
+                },
               ),
+              const SizedBox(height: 10),
               const Text(
                 'versi 1.0.0',
                 style: TextStyle(
-                    color: MainColors.grey,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500),
+                  color: MainColors.grey,
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const SizedBox(height: 20),
               InkWell(
                 onTap: () => logoutUser(context),
                 child: const Row(
@@ -154,16 +204,14 @@ class SettingsPage extends StatelessWidget {
                       Icons.exit_to_app,
                       color: MainColors.red,
                     ),
-                    SizedBox(
-                      width: 10,
-                    ),
+                    SizedBox(width: 10),
                     Text(
                       'Keluar',
                       style: TextStyle(color: MainColors.red),
                     )
                   ],
                 ),
-              )
+              ),
             ],
           ),
         ),

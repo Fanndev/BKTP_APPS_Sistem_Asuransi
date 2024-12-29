@@ -6,18 +6,27 @@ void migrateExistingUsers() async {
     {
       'username': 'admin',
       'email': 'admin@gmail.com',
+      'ktp': '2301010162',
+      'phone': '08123456789',
+      'gender': 'Laki-laki',
       'password': 'admin123',
       'role': 'admin',
     },
     {
       'username': 'petugas',
       'email': 'petugas@gmail.com',
+      'ktp': '2301010162',
+      'phone': '08123456789',
+      'gender': 'Laki-laki',
       'password': 'petugas123',
       'role': 'petugas',
     },
     {
       'username': 'anggota',
       'email': 'anggota@gmail.com',
+      'ktp': '2301010162',
+      'phone': '08123456789',
+      'gender': 'Laki-laki',
       'password': 'anggota123',
       'role': 'anggota',
     },
@@ -39,6 +48,9 @@ void migrateExistingUsers() async {
           .set({
         'username': user['username'],
         'email': user['email'],
+        'ktp': user['ktp'],
+        'phone': user['phone'],
+        'gender': user['gender'],
         'role': user['role'],
       });
 
