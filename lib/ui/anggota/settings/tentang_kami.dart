@@ -44,7 +44,7 @@ class TentangKamiPage extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Aplikasi ini dikembangkan oleh Mohamad Irfan Fadhlurrahman (Fanndev). '
+              'Aplikasi ini dikembangkan oleh Lalu nuzul fahmi. '
               'Saya adalah seorang Developer Pemula yang tertarik dengan teknologi '
               'modern. Aplikasi ini dibuat sebagai bagian dari portofolio saya '
               'untuk menunjukkan kemampuan saya dalam mengembangkan aplikasi menggunakan '

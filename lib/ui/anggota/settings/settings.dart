@@ -2,7 +2,7 @@ import 'package:elegant_notification/elegant_notification.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mob3_uas_klp_05/ui/anggota/settings/reset_password.dart';
+import 'package:mob3_uas_klp_05/ui/anggota/settings/edit_page.dart';
 import 'package:mob3_uas_klp_05/ui/anggota/settings/tentang_kami.dart';
 import 'package:mob3_uas_klp_05/ui/anggota/settings/update_profile.dart';
 import 'package:mob3_uas_klp_05/widget/custom_list_tile.dart';
@@ -54,7 +54,7 @@ class SettingsPage extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const UpdateProfilePage(),
+                  builder: (context) => DataPage(),
                 ),
               );
             },
@@ -151,14 +151,7 @@ class SettingsPage extends StatelessWidget {
               CustomListTile(
                 icon: Icons.dashboard,
                 title: 'Reset Password',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResetPasswordPage(),
-                    ),
-                  );
-                },
+                onTap: () {},
               ),
               const SizedBox(height: 10),
               const Row(

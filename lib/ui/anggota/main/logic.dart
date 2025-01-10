@@ -10,7 +10,7 @@ class PageLogic with ChangeNotifier {
   // List halaman untuk BottomNavigationBar
   List<Widget> page = [
     const HomePageAnggota(),
-    const AktivitasPage(),
+     AktivitasPage(),
     const ProdutAnggotaPage(),
     const SettingsPage(),
   ];

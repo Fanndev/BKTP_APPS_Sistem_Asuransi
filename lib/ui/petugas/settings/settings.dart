@@ -1,219 +1,99 @@
-import 'package:elegant_notification/elegant_notification.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mob3_uas_klp_05/ui/petugas/settings/reset_password.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:mob3_uas_klp_05/ui/petugas/settings/edit_profile.dart';
 import 'package:mob3_uas_klp_05/ui/petugas/settings/tentang_kami.dart';
-import 'package:mob3_uas_klp_05/ui/petugas/settings/update_profile.dart';
-import 'package:mob3_uas_klp_05/widget/custom_list_tile.dart';
-import 'package:mob3_uas_klp_05/ui/auth/login.dart';
-import 'package:mob3_uas_klp_05/utils/colors.dart';
+import 'package:mob3_uas_klp_05/utils/themeNotifier.dart';
 
-class SettingsPage extends StatelessWidget {
-  const SettingsPage({super.key});
-
-  // Logout
-  Future<void> logoutUser(BuildContext context) async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      ElegantNotification.success(
-        title: const Text("Logout Berhasil"),
-        description: const Text("Anda telah berhasil logout."),
-      ).show(context);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
-    } catch (e) {
-      ElegantNotification.error(
-        title: const Text("Logout Gagal"),
-        description: Text("Terjadi kesalahan: $e"),
-      ).show(context);
-    }
-  }
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final currentUser = FirebaseAuth.instance.currentUser;
+    final themeNotifier = ThemeNotifier.of(context);
+    final User? user = FirebaseAuth.instance.currentUser;
 
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
-        title: const Text(
-          'Akun Saya',
-          style: TextStyle(
-            color: MainColors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        backgroundColor: MainColors.primary,
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(70.0),
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const UpdateProfilePage(),
-                ),
-              );
-            },
-            child: Container(
-              padding: const EdgeInsets.all(16.0),
-              color: MainColors.primary,
-              child: StreamBuilder<DocumentSnapshot>(
-                stream: FirebaseFirestore.instance
-                    .collection('users')
-                    .doc(currentUser?.uid)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(
-                      child: CircularProgressIndicator(color: Colors.white),
-                    );
-                  }
-
-                  if (snapshot.hasError ||
-                      !snapshot.hasData ||
-                      snapshot.data?.data() == null) {
-                    return const Text(
-                      'Gagal memuat data',
-                      style: TextStyle(color: Colors.white),
-                    );
-                  }
-
-                  final userData =
-                      snapshot.data?.data() as Map<String, dynamic>;
-
-                  return Row(
-                    children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.white,
-                        radius: 30.0,
-                        child: Icon(
-                          Icons.person,
-                          size: 30.0,
-                          color: MainColors.primary,
-                        ),
-                      ),
-                      const SizedBox(width: 16.0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            userData['username'] ?? 'Nama tidak tersedia',
-                            style: const TextStyle(
-                              color: MainColors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Text(
-                            userData['email'] ?? 'Email tidak tersedia',
-                            style: const TextStyle(
-                              color: MainColors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      const Icon(
-                        Icons.arrow_forward_ios,
-                        color: Colors.white,
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ),
-          ),
-        ),
+        title: const Text('Profil'),
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Column(
-            children: [
-              const SizedBox(height: 20),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 20),
+            CircleAvatar(
+              radius: 60,
+              backgroundColor: Colors.grey[300],
+              backgroundImage: CachedNetworkImageProvider(
+                user?.photoURL ??
+                    'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.kompasiana.com%2Fisz.singa%2F54f83018a33311d25d8b46c3%2Fcaleg-yang-terinveksi-virus-doraemon&psig=AOvVaw2UaOs7trkSEXMiJT-8bFh8&ust=1734988351255000&source=images&cd=vfe&opi=89978449&ved=0CBAQjRxqFwoTCIiV7LSlvIoDFQAAAAAdAAAAABAE',
+              ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              user?.displayName ?? 'Petugas',
+              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              user?.email ?? 'Email tidak tersedia',
+              style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+            ),
+            const SizedBox(height: 30),
+            Container(
+              margin: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
                 children: [
-                  Text(
-                    'Account',
-                    style: TextStyle(
-                      color: MainColors.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                  ListTile(
+                    leading: Icon(
+                      themeNotifier?.isDarkMode ?? false
+                          ? Icons.dark_mode
+                          : Icons.light_mode,
+                      color: Colors.blueAccent,
                     ),
+                    title: const Text('Mode Malam'),
+                    trailing: Switch(
+                      value: themeNotifier?.isDarkMode ?? false,
+                      onChanged: themeNotifier?.toggleTheme,
+                    ),
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading:
+                        const Icon(Icons.settings, color: Colors.blueAccent),
+                    title: const Text('Pengaturan'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => TentangKami()),
+                      );
+                    },
+                  ),
+                  const Divider(),
+                  ListTile(
+                    leading: const Icon(Icons.logout, color: Colors.redAccent),
+                    title: const Text('Logout'),
+                    onTap: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.pushReplacementNamed(context, '/login');
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.edit, color: Colors.green),
+                    title: const Text('Edit Profil'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => EditProfilePage()),
+                      );
+                    },
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              CustomListTile(
-                icon: Icons.dashboard,
-                title: 'Reset Password',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ResetPasswordPage(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Bantuan',
-                    style: TextStyle(
-                      color: MainColors.primary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                    ),
-                  ),
-                ],
-              ),
-              CustomListTile(
-                icon: Icons.group,
-                title: 'Tentang Kami',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const TentangKamiPage(),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(height: 10),
-              const Text(
-                'versi 1.0.0',
-                style: TextStyle(
-                  color: MainColors.grey,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              const SizedBox(height: 20),
-              InkWell(
-                onTap: () => logoutUser(context),
-                child: const Row(
-                  children: [
-                    Icon(
-                      Icons.exit_to_app,
-                      color: MainColors.red,
-                    ),
-                    SizedBox(width: 10),
-                    Text(
-                      'Keluar',
-                      style: TextStyle(color: MainColors.red),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

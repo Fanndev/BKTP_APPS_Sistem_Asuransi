@@ -10,7 +10,7 @@ class PageLogic with ChangeNotifier {
   List<Widget> page = [
     const DashboardPetugas(),
     const AktivitasPage(),
-    const SettingsPage(),
+     ProfilePage(),
   ];
 
   // Getter untuk currentIndex

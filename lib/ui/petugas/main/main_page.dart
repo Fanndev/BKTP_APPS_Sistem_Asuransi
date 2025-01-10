@@ -12,10 +12,10 @@ class MainPagePetugas extends StatefulWidget {
 
 class _MainPagePetugasState extends State<MainPagePetugas> {
   int _currentIndex = 0; // Index yang aktif pada BottomNavigationBar
-  final List<Widget> _pages = const [
+  final List<Widget> _pages =  [
     DashboardPetugas(),
     AktivitasPage(),
-    SettingsPage()
+    ProfilePage()
   ];
 
   // Fungsi untuk mengganti halaman berdasarkan index

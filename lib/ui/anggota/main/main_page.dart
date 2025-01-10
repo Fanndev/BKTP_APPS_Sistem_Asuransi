@@ -13,7 +13,7 @@ class MainPageAnggota extends StatefulWidget {
 
 class _MainPageAnggotaState extends State<MainPageAnggota> {
   int _currentIndex = 0; // Index yang aktif pada BottomNavigationBar
-  final List<Widget> _pages = const [
+  final List<Widget> _pages =  [
     HomePageAnggota(),
     AktivitasPage(),
     ProdutAnggotaPage(),
